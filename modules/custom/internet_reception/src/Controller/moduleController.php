@@ -10,12 +10,11 @@ use Drupal\Core\Controller\ControllerBase;
 
 class moduleController extends ControllerBase {
 
-  public function content(){
+  public function content() {
     return [
       '#type' => 'markup',
       '#markup' => t('Hello, World!'),
     ];
-
   }
 
 }

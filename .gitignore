@@ -40,3 +40,4 @@ simpletest
 
 #Ignore .idea settings
 .idea
+/.idea

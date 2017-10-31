@@ -9,7 +9,7 @@
 
 # Ignore core when managing all of a project's dependencies with Composer
 # including Drupal core.
-# core
+core
 
 # Core's dependencies are managed with Composer.
 vendor
@@ -29,14 +29,14 @@ sites/simpletest
 # or delete the previous settings and uncomment the following ones, instead.
 
 # Ignore configuration files that may contain sensitive information.
-# */settings*.php
+*/settings*.php
 
 # Ignore paths that contain user-generated content.
-# */files
-# */private
+*/files
+*/private
 
 # Ignore SimpleTest multi-site environment.
-# simpletest
+simpletest
 
 #Ignore
-# sites/.idea
+sites/.idea

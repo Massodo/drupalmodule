@@ -1,0 +1,8 @@
+name: Internet reception
+description: 'internet  reception first module'
+type: module
+core: 8.x
+version: 1.0
+package: Custom
+dependencies:
+- block

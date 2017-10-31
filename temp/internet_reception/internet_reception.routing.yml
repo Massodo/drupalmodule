@@ -1,0 +1,16 @@
+internet_reception.content:
+  path: '/reception'
+  defaults:
+    _controller: 'Drupal\internet_reception\Controller\moduleController::content'
+  requirements:
+    _permission: 'access content'
+
+internet_reception.example_form:
+  path: '/form'
+  defaults:
+    _form: '\Drupal\internet_reception\Form\InternetReceptionForm'
+    _title: 'Internet Reception'
+  requirements:
+    _permission: 'access content'
+
+

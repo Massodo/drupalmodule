@@ -95,6 +95,8 @@ class InternetReceptionForm extends FormBase {
   public function submitForm(array &$form, FormStateInterface $form_state)
   {
     $account = \Drupal::currentUser();
+    $system_site_config = \Drupal::config('system.site');
+
 
     $params['subject'] = $form_state->getValue('subject');
     $params['body'] = array(
@@ -105,6 +107,6 @@ class InternetReceptionForm extends FormBase {
     );
 
     \Drupal::service('plugin.manager.mail')->mail('smtp', 'smtp-test',
-    'pinkiepie1950@gmail.com', $account->getPreferredLangcode() , $params);
+    $system_site_config->get('mail'), $account->getPreferredLangcode() , $params);
   }
 }

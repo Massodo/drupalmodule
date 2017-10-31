@@ -73,14 +73,14 @@ class InternetReceptionForm extends FormBase {
    * @param FormStateInterface $form_state
    */
   public function validateForm(array &$form, FormStateInterface $form_state) {
-    $is_number = preg_match("/[\d]+/", $form_state -> getValue('name'), $match);
+    $is_number = preg_match("/[\d]+/", $form_state->getValue('name'), $match);
 
     if ($is_number > 0) {
-      $form_state->setErrorByName('title', $this -> t('Name files invalid value.'));
+      $form_state->setErrorByName('title', $this->t('Name files invalid value.'));
     }
 
-    if(($form_state -> getValue('age')) < 0) {
-      $form_state -> setErrorByName('age', $this -> t('Invalid age'));
+    if(($form_state->getValue('age')) < 0) {
+      $form_state->setErrorByName('age', $this->t('Invalid age'));
     }
   }
 
@@ -96,15 +96,15 @@ class InternetReceptionForm extends FormBase {
   {
     $account = \Drupal::currentUser();
 
-    $params['subject'] = $form_state -> getValue('subject');
+    $params['subject'] = $form_state->getValue('subject');
     $params['body'] = array(
-      t('Name: ') . t($form_state -> getValue('name')),
-      t('Age: ') . t($form_state -> getValue('age')),
-      t('Email: ') . t($form_state -> getValue('email')),
+      t('Name: ') . t($form_state->getValue('name')),
+      t('Age: ') . t($form_state->getValue('age')),
+      t('Email: ') . t($form_state->getValue('email')),
       $form_state -> getValue('message')
     );
 
-    \Drupal::service('plugin.manager.mail') -> mail('smtp', 'smtp-test',
-    'pinkiepie1950@gmail.com', $account -> getPreferredLangcode() , $params);
+    \Drupal::service('plugin.manager.mail')->mail('smtp', 'smtp-test',
+    'pinkiepie1950@gmail.com', $account->getPreferredLangcode() , $params);
   }
 }

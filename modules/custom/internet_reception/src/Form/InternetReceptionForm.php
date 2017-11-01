@@ -12,7 +12,7 @@ class InternetReceptionForm extends FormBase {
    * {@inheritdoc}
    */
   public function getFormId() {
-    return 'ex_form_exform_form';
+    return 'internet_reception_exform_form';
   }
 
   /**
@@ -67,7 +67,7 @@ class InternetReceptionForm extends FormBase {
       $form_state->setErrorByName('title', $this->t('Name files invalid value.'));
     }
 
-    if(($form_state->getValue('age')) < 0) {
+    if (($form_state->getValue('age')) < 0) {
       $form_state->setErrorByName('age', $this->t('Invalid age'));
     }
   }

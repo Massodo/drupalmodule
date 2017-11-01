@@ -1,12 +1,1 @@
 <?php
-/**
- * Implements hook_theme().
- */
-function internet_reception_theme()
-{
-  return [
-    'my-test-template' => [
-      'variables' => ['test_var' => NULL],
-    ],
-  ];
-}

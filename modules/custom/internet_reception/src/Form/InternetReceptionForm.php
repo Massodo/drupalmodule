@@ -79,7 +79,7 @@ class InternetReceptionForm extends FormBase {
       $form_state->setErrorByName('title', $this->t('Name files invalid value.'));
     }
 
-    if(($form_state->getValue('age')) < 0) {
+    if (($form_state->getValue('age')) < 0) {
       $form_state->setErrorByName('age', $this->t('Invalid age'));
     }
   }

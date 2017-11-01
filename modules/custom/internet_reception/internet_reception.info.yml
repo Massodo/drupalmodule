@@ -1,5 +1,5 @@
 name: Internet reception
-description: 'Internet  reception first module.'
+description: 'Internet reception, first module.'
 type: module
 core: 8.x
 version: 1.1

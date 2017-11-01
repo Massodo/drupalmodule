@@ -9,25 +9,14 @@ use Drupal\smtp\Plugin\Mail\SMTPMailSystem;
 class InternetReceptionForm extends FormBase {
 
   /**
-   * Returns a unique string identifying the form.
-   *
-   * @return string
-   *   The unique string identifying the form.
+   * {@inheritdoc}
    */
   public function getFormId() {
-    return 'ex_form_exform_form';
+    return 'internet_reception_exform_form';
   }
 
   /**
-   * Form constructor.
-   *
-   * @param array $form
-   *   An associative array containing the structure of the form.
-   * @param \Drupal\Core\Form\FormStateInterface $form_state
-   *   The current state of the form.
-   *
-   * @return array
-   *   The form structure.
+   * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
     $form['name'] = [
@@ -69,8 +58,7 @@ class InternetReceptionForm extends FormBase {
   }
 
   /**
-   * @param array $form
-   * @param FormStateInterface $form_state
+   * {@inheritdoc}
    */
   public function validateForm(array &$form, FormStateInterface $form_state) {
     $is_number = preg_match("/[\d]+/", $form_state->getValue('name'), $match);
@@ -85,12 +73,7 @@ class InternetReceptionForm extends FormBase {
   }
 
   /**
-   * Form submission handler.
-   *
-   * @param array $form
-   *   An associative array containing the structure of the form.
-   * @param \Drupal\Core\Form\FormStateInterface $form_state
-   *   The current state of the form.
+   * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state)
   {

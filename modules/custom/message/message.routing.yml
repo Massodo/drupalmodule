@@ -1,0 +1,7 @@
+message.settings:
+  path: '/admin/structure/message/settings'
+  defaults:
+    _form: '\Drupal\message\Form\SettingsForm'
+    _title: 'message'
+  requirements:
+    _permission: 'administer site configuration'

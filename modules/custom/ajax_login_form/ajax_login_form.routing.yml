@@ -1,5 +1,5 @@
 ajax_login_form.example_form:
-  path: '/login'
+  path: 'login'
   defaults:
     _form: '\Drupal\ajax_login_form\Form\AJAXLoginForm'
     _title: 'AJAX Login Form'

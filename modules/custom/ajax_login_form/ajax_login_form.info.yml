@@ -1,0 +1,7 @@
+name: AJAX Login Form
+description: 'AJAX Login From for you site.'
+type: module
+core: 8.x
+package: Custom
+dependencies:
+- block

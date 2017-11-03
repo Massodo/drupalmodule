@@ -8,6 +8,9 @@ use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\CssCommand;
 use Drupal\Core\Ajax\HtmlCommand;
 
+/**
+ * {@inheritdoc}
+ */
 class AJAXLoginForm extends UserLoginForm {
 
   /**
@@ -23,33 +26,33 @@ class AJAXLoginForm extends UserLoginForm {
   public function buildForm(array $form, FormStateInterface $form_state) {
     if (\Drupal::currentUser()->isAnonymous()){
       $form['system_messages'] = [
-      '#markup' => '<div id="form-system-messages"></div>',
-      '#weight' => '-100',
+        '#markup' => '<div id="form-system-messages"></div>',
+        '#weight' => '-100',
       ];
 
       $form += parent ::buildForm($form, $form_state);
 
       $form['name'] += [
-      '#prefix' => '<div id="ajax-login-form-email">',
-      '#suffix' => '</div>'
+        '#prefix' => '<div id="ajax-login-form-email">',
+        '#suffix' => '</div>'
       ];
 
       $form['actions']['submit'] += [
-      '#ajax' => [
-      'callback' => '::ajaxHideForm',
-      'callback' => '::ajaxSubmitCallback',
-      'event' => 'click',
-      'progress' => [
-      'type' => 'throbber',
-      ]
-      ],
-      '#prefix' => '<div id="ajax-login-form-submit">',
-      '#suffix' => '</div>'
+        '#ajax' => [
+          'callback' => '::ajaxHideForm',
+          'callback' => '::ajaxSubmitCallback',
+          'event' => 'click',
+          'progress' => [
+            'type' => 'throbber',
+          ]
+        ],
+        '#prefix' => '<div id="ajax-login-form-submit">',
+        '#suffix' => '</div>'
       ];
 
       $form['pass'] += [
-      '#prefix' => '<div id="ajax-login-form-pass">',
-      '#suffix' => '</div>'
+        '#prefix' => '<div id="ajax-login-form-pass">',
+        '#suffix' => '</div>'
       ];
     } else {
       drupal_set_message('You are already logged in.');

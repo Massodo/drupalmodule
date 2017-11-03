@@ -54,7 +54,8 @@ class AJAXLoginForm extends UserLoginForm {
         '#prefix' => '<div id="ajax-login-form-pass">',
         '#suffix' => '</div>'
       ];
-    } else {
+    }
+    else {
       drupal_set_message('You are already logged in.');
     }
     return $form;

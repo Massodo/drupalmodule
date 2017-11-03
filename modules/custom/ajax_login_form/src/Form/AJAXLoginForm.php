@@ -3,10 +3,13 @@
 namespace Drupal\ajax_login_form\Form;
 
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Link;
+use Drupal\Core\Utility\LinkGenerator;
 use Drupal\user\Form\UserLoginForm;
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\CssCommand;
 use Drupal\Core\Ajax\HtmlCommand;
+use Drupal\Core\Url;
 
 /**
  * {@inheritdoc}
@@ -56,7 +59,7 @@ class AJAXLoginForm extends UserLoginForm {
       ];
     }
     else {
-      drupal_set_message('You are already logged in.');
+      drupal_set_message(t('You are already logged in.'));
     }
     return $form;
   }
@@ -77,13 +80,10 @@ class AJAXLoginForm extends UserLoginForm {
     ];
     $messages = \Drupal::service('renderer')->render($message);
     $ajax_response->addCommand(new HtmlCommand('#form-system-messages', $messages));
-    if ($form_state->getErrors() == null){
-      $ajax_response -> addCommand(new CssCommand('#ajax-login-form-email',
-      ['display' => 'none']));
-      $ajax_response -> addCommand(new CssCommand('#ajax-login-form-pass',
-      ['display' => 'none']));
-      $ajax_response -> addCommand(new CssCommand('#ajax-login-form-submit',
-      ['display' => 'none']));
+    if ($form_state->getErrors() == NULL){
+      $ajax_response->addCommand(new CssCommand('#ajax-login-form-email', ['display' => 'none']));
+      $ajax_response->addCommand(new CssCommand('#ajax-login-form-pass', ['display' => 'none']));
+      $ajax_response->addCommand(new CssCommand('#ajax-login-form-submit', ['display' => 'none']));
     }
     return $ajax_response;
   }
@@ -93,7 +93,7 @@ class AJAXLoginForm extends UserLoginForm {
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
     parent ::submitForm($form, $form_state);
-    drupal_set_message(t('Hello, username! To see the website as a 
-    registered user go to this <a href="/">link</a>'), 'status');
+    $link = Link::fromTextAndUrl(t('link'), Url::fromRoute('<current>'))->toString();
+    drupal_set_message(t('Hello, username! To see the website as a registered user go to this ' . $link), 'status');
   }
 }

@@ -1,0 +1,21 @@
+<?php
+
+/**
+ * @file
+ * Contains message.module..
+ */
+
+
+/**
+ * Implements hook_theme().
+ * @return mixed
+ */
+function message_theme() {
+  $theme['hello_page'] = [
+  'variables' => ['name' => NULL],
+  'template' => 'hello',
+  ];
+
+  return $theme;
+}
+

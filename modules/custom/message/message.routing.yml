@@ -1,3 +1,11 @@
+message.hello:
+  path: '/hello'
+  defaults:
+    _controller: '\Drupal\message\Controller\TemplatesController::content'
+    _title: 'Template'
+  requirements:
+    _permission: 'access content'
+
 message.settings:
   path: '/admin/structure/message/settings'
   defaults:

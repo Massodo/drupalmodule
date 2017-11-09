@@ -1,5 +1,5 @@
 message.hello:
-  path: '/hello'
+  path: '/testform'
   defaults:
     _controller: '\Drupal\message\Controller\TemplatesController::content'
     _title: 'Template'
@@ -13,3 +13,11 @@ message.settings:
     _title: 'message'
   requirements:
     _permission: 'administer site configuration'
+
+message.modalform:
+  path: '/modalform'
+  defaults:
+    _form: '\Drupal\message\Form\ModalForm'
+    _title: 'Internet Reception'
+  requirements:
+    _permission: 'access content'

@@ -12,10 +12,23 @@
  */
 function message_theme() {
   $theme['hello_page'] = [
-  'variables' => ['name' => NULL],
+  'variables' => [
+    'content' => NULL,
+    'title' => NULL,
+    'message' => NULL,
+    'styles' => NULL
+  ],
   'template' => 'hello',
   ];
 
   return $theme;
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function message_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id)
+{
+  //\Drupal\Core\Form\drupal_set_message();
 }
 

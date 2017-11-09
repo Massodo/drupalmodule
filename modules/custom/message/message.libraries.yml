@@ -1,0 +1,12 @@
+message:
+  version: VERSION
+  css:
+    theme:
+      css/modal.css: {}
+  js:
+    js/message.js: {}
+  dependencies:
+    - core/jquery
+    - core/jquery.once
+    - core/drupal
+    - core/drupalSettings

@@ -3,3 +3,5 @@ description: 'JQuery message'
 type: module
 core: 8.x
 package: Custom
+libraries:
+  - message/message

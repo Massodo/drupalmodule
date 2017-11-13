@@ -1,5 +1,0 @@
-name = Node Views
-description = Custom module for node views.
-package = Custom
-core = 7.x
-configure = admin/config/custom/node_views

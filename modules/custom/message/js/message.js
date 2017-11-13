@@ -5,6 +5,7 @@
   Drupal.behaviors.message = {
 
     attach: function (context, settings) {
+
       $('#message').ready(function () {
         var window = $('#message');
         var windowSettings = drupalSettings.message;
@@ -18,7 +19,7 @@
           window.css('color', windowSettings.color);
         }
         $('#overlay').fadeIn(400, function () {
-          window.css('display', 'block').animate({opacity: 1, top: '50%'}, 200);
+          window.css('display', 'block');//.animate({opacity: 1, top: '50%'}, 200);
         });
       });
 
@@ -28,40 +29,45 @@
           $('#overlay').fadeOut(400);
         });
       });
-
-
     }
   }
 
   Drupal.behaviors.drag = {
     attach: function (context, settings) {
 
-      var window = $('#message');
+      var windowX;
+      var windowY;
+      var drag = false;
 
-      window.onmousedown = function (e) {
-        window.css('position', 'absolute');
-        moveAt(e, window);
-        alert(321);
+      $('#title').mousedown(function (e) {
+        var offset = $('#message').offset();
+        windowX = e.clientX - (offset.left + 110);
+        windowY = e.clientY - (offset.top + 140);
+        drag = true;
+      })
 
-        window.ondragstart = function () {
-          return false;
+      $('#message').mouseup(function () {
+        drag = false;
+      })
+
+      $('#message').mousemove(function (e) {
+        if(drag){
+          var top = e.clientY - windowY;
+          var left = e.clientX - windowX;
+          var borderTop = 0 + drupalSettings.message.height / 2;
+          var borderBottom = $(window).height() - drupalSettings.message.height / 2;
+          var borderLeft = 0 + drupalSettings.message.width / 2;
+          var borderRight = $(window).width() - drupalSettings.message.width / 2;
+
+          if (top >= borderTop && top <= borderBottom) {
+            $('#message', context).css('top', top);
+          }
+
+          if (left >= borderLeft && left <= borderRight) {
+            $('#message', context).css('left', left);
+          }
         }
-
-        window.onmousemove = function (e) {
-          moveAt(e, $('#message'))
-        }
-
-        window.onmouseup = function () {
-          window.onmousemove = null;
-          window.mousedown = null
-        }
-
-        function moveAt(e) {
-          //alert(123);
-          window.css('left', e.pageX - window.offsetWidth / 2 + 'px');
-          window.css('top', e.pageY - window.offsetHeight / 2 + 'px');
-        }
-      }
-    }
+      })
+    },
   }
 })(jQuery, Drupal, drupalSettings)

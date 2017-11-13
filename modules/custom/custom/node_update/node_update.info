@@ -1,0 +1,4 @@
+name = Node Update
+description = Custom module for node update.
+package = Custom
+core = 7.x

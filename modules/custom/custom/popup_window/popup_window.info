@@ -1,0 +1,7 @@
+name = PopUp Window
+description = Custom module for popup window.
+package = Custom
+core = 7.x
+configure = admin/config/custom/popup_window
+stylesheets[all][] = theme/css/popup_window.css
+scripts[] = theme/js/popup_window.js

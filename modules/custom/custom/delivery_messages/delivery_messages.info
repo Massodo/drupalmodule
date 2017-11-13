@@ -1,0 +1,6 @@
+name = Delivery Messages
+description = Custom module from delivery messages.
+package = Custom
+core = 7.x
+dependencies[] = elysia_cron
+dependencies[] = mimemail

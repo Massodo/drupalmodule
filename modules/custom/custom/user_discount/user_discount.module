@@ -1,0 +1,139 @@
+<?php
+
+/**
+ * @file
+ * Build page for user_discount.
+ */
+
+/**
+ * Include .inc files.
+ */
+require_once 'includes/user_discount.common.inc';
+require_once 'includes/user_discount.form.inc';
+require_once 'includes/user_discount.admin.inc';
+
+// Admin uri links.
+define('ADMIN_CONTENT_USER_DISCOUNT_MANAGE_URI', 'admin/config/custom/user_discount_list/manage/');
+define('ADMIN_CONTENT_USER_DISCOUNT_URI', 'admin/config/custom/user_discount_list');
+
+/**
+ * Implements hook_menu().
+ */
+function user_discount_menu() {
+  $items = array();
+
+  $items['successful'] = array(
+    'title' => 'Registration Successful!',
+    'page callback' => 'user_discount_successful_content',
+    'access callback' => 'user_is_logged_in',
+    'menu_name' => 'main-menu',
+    'file' => '/includes/user_discount.page.inc',
+  );
+  $items['admin/config/custom'] = array(
+    'title' => 'Custom',
+    'position' => 'right',
+    'description' => 'Custom module for User Discount.',
+    'page callback' => 'system_admin_menu_block_page',
+    'access arguments' => array('administer site configuration'),
+    'file' => 'system.admin.inc',
+    'file path' => drupal_get_path('module', 'system'),
+  );
+  $items['admin/config/custom/user_discount'] = array(
+    'title' => 'User Discount Message',
+    'description' => 'Custom module for User Discount.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('user_discount_config_form'),
+    'access arguments' => array('administer site configuration'),
+    'type' => MENU_NORMAL_ITEM,
+    'file' => 'includes/user_discount.admin.inc',
+  );
+
+  return $items;
+}
+
+/**
+ * Implements hook_entity_info().
+ */
+function user_discount_entity_info() {
+  return array(
+    'user_discount_list' => array(
+      'label' => t('User Discount'),
+      'label callback' => 'user_discount_list_label_callback',
+      'entity class' => 'Entity',
+      'controller class' => 'EntityAPIController',
+      'base table' => 'user_discount',
+      'module' => 'user_discount',
+      'entity keys' => array(
+        'id' => 'tid',
+        'label' => 'discount_code',
+      ),
+      'admin ui' => array(
+        'path' => 'admin/config/custom/user_discount_list',
+        'controller class' => 'UserDiscountUIController',
+      ),
+      'access callback' => 'user_discount_access',
+      'module' => 'user_discount',
+    ),
+  );
+}
+
+/**
+ * Implements hook_entity_access().
+ */
+function user_discount_access($op, $entity, $account = NULL, $entity_type = 'user_discount_list') {
+  return user_access('administer site configuration');
+}
+
+/**
+ * Implements hook_token_info().
+ */
+function user_discount_token_info() {
+  $info['type']['current-user'] = array(
+    'name' => t('Current user'),
+    'description' => t('Tokens related to the currently logged in user.'),
+  );
+
+  $info['tokens']['current-user']['discount-code'] = array(
+    'name' => t('Discount code'),
+    'description' => t('The discount code of the user.'),
+  );
+
+  return $info;
+}
+
+/**
+ * Implements hook_tokens().
+ */
+function user_discount_tokens($type, $tokens, array $data = array(), array $options = array()) {
+  $replacements = array();
+
+  if ($type == 'current-user') {
+    foreach ($tokens as $name => $original) {
+      switch ($name) {
+        case 'discount-code':
+          $replacements[$original] = user_discount_get_user_token();
+          break;
+      }
+    }
+  }
+
+  return $replacements;
+}
+
+/**
+ * Implements hook_views_data_alter().
+ */
+function user_discount_views_data_alter(&$data) {
+  $data['user_discount']['uid']['relationship']['handler'] = 'views_handler_relationship';
+  $data['user_discount']['uid']['relationship']['title'] = 'uid';
+  $data['user_discount']['uid']['relationship']['base'] = 'users';
+  $data['user_discount']['uid']['relationship']['base field'] = 'uid';
+}
+
+/**
+ * Implements hook_label_callback().
+ */
+function user_discount_list_label_callback($discount_code, $type) {
+  $username = user_load($discount_code->uid);
+  return isset($username->name) ? $username->name : '';
+}

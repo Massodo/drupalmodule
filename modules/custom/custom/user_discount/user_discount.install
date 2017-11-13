@@ -1,0 +1,36 @@
+<?php
+
+/**
+ * @file
+ * Create table for user_discount.
+ */
+
+/**
+ * Implements hook_schema().
+ */
+function user_discount_schema() {
+  $schema['user_discount'] = array(
+    'description' => 'The base table for user_discount.',
+    'fields' => array(
+      'tid' => array(
+        'description' => 'Token ID',
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'uid' => array(
+        'description' => 'The uid of user.',
+        'type' => 'int',
+        'length' => 10,
+      ),
+      'discount_code' => array(
+        'description' => 'The discount code for this user.',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+      ),
+    ),
+    'primary key' => array('tid'),
+  );
+  return $schema;
+}

@@ -1,0 +1,42 @@
+<?php
+
+/**
+ * @file
+ * Create table for popup_window.
+ */
+
+/**
+ * Implements hook_schema().
+ */
+function node_views_entity_schema() {
+  $schema['node_views_entity'] = array(
+    'description' => 'The base table for node_views.',
+    'fields' => array(
+      'rid' => array(
+        'description' => 'Record ID',
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'nid' => array(
+        'description' => 'The nid of this node.',
+        'type' => 'int',
+        'length' => 10,
+        'not null' => TRUE,
+      ),
+      'uid' => array(
+        'description' => 'The uid of user.',
+        'type' => 'int',
+        'length' => 10,
+      ),
+      'created' => array(
+        'description' => 'Date and time of viewing this node.',
+        'type' => 'datetime',
+        'mysql_type' => 'datetime',
+        'not null' => TRUE,
+      ),
+    ),
+    'primary key' => array('rid'),
+  );
+  return $schema;
+}

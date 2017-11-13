@@ -1,0 +1,5 @@
+name = Node Views Entity
+description = Custom module for node views entity.
+package = Custom
+core = 7.x
+dependencies[] = entity

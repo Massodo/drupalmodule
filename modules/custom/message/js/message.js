@@ -1,54 +1,67 @@
 (function ($, Drupal, drupalSettings) {
 
-  "use strict";
+  'use strict'
 
   Drupal.behaviors.message = {
-    attach: function (context, settings) {
 
-      $(context).find('h1').ready(function (event) {
-        //event.preventDefault();
+    attach: function (context, settings) {
+      $('#message').ready(function () {
+        var window = $('#message');
+        var windowSettings = drupalSettings.message;
+        if(windowSettings){
+          window.css('width', windowSettings.width);
+          window.css('height', windowSettings.height);
+          window.css('background', windowSettings.background);
+          window.css('border', windowSettings.border + 'px solid');
+          window.css('border-color', windowSettings.borderColor);
+          window.css('font-size', windowSettings.fontSize + 'px');
+          window.css('color', windowSettings.color);
+        }
         $('#overlay').fadeIn(400, function () {
-          $('#modal').css('display' , 'block').animate({opacity: 1, top: '50%'}, 200);
-        })
+          window.css('display', 'block').animate({opacity: 1, top: '50%'}, 200);
+        });
       });
 
-      $(context).find('#modal > #title').mousedown(function () {
-        $(context).find('#modal').draggable({
-          containment: "#page", handle: '#title'});
-      });
-
-      $(context).find('#close, #overlay').click(function () {
-        $('#modal').animate({opacity: 0, top: '45%'}, 200, function () {
-          $(this).css('display', 'none');
+      $('.close').click(function () {
+        $('#message').animate({opacity: 0, top: '45%'}, 200, function () {
+          $('#message').css('display', 'none');
           $('#overlay').fadeOut(400);
-          }
-        )
-      })
-    }
-  };
-})(jQuery, Drupal, drupalSettings);
-
-/*
-    attach: function (context, settings) {
-      Database.getTemplate();
-      $(context).find('.content').click(function (event) {
-        var frontpageModal = Drupal.dialog(Database.getTemplate('hello'), {
-          title: '123'
         });
-        /*
-        var frontpageModal = Drupal.dialog(/*'<div>Modal content</div>', {
-          title: 'Modal on frontpage',
-          dialogClass: 'front-modal',
-          width: 400,
-          height: 400,
-          autoResize: true,
-          close: function (event) {
-            $(event.target).remove();
-          }
-        });
-        frontpageModal.showModal();
-
       });
-    }
-    */
 
+
+    }
+  }
+
+  Drupal.behaviors.drag = {
+    attach: function (context, settings) {
+
+      var window = $('#message');
+
+      window.onmousedown = function (e) {
+        window.css('position', 'absolute');
+        moveAt(e, window);
+        alert(321);
+
+        window.ondragstart = function () {
+          return false;
+        }
+
+        window.onmousemove = function (e) {
+          moveAt(e, $('#message'))
+        }
+
+        window.onmouseup = function () {
+          window.onmousemove = null;
+          window.mousedown = null
+        }
+
+        function moveAt(e) {
+          //alert(123);
+          window.css('left', e.pageX - window.offsetWidth / 2 + 'px');
+          window.css('top', e.pageY - window.offsetHeight / 2 + 'px');
+        }
+      }
+    }
+  }
+})(jQuery, Drupal, drupalSettings)

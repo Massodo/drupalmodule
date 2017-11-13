@@ -1,0 +1,112 @@
+<?php
+
+/**
+ * @file
+ * Build page for delivery_messages.
+ */
+
+/**
+ * Include .inc files.
+ */
+require_once 'includes/delivery_messages.common.inc';
+
+/**
+ * Implements hook_menu().
+ */
+function delivery_messages_menu() {
+  $items = array();
+  $items['admin/config/custom'] = array(
+    'title' => 'Custom',
+    'position' => 'right',
+    'description' => 'Custom module for Delivery Messages.',
+    'page callback' => 'system_admin_menu_block_page',
+    'access arguments' => array('administer site configuration'),
+    'file' => 'system.admin.inc',
+    'file path' => drupal_get_path('module', 'system'),
+  );
+  $items['admin/config/custom/delivery-messages'] = array(
+    'title' => 'Delivery Messages',
+    'description' => 'Custom module for Delivery Messages.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('delivery_messages_config_form'),
+    'access arguments' => array('administer site configuration'),
+    'type' => MENU_NORMAL_ITEM,
+    'file' => 'includes/delivery_messages.admin.inc',
+  );
+
+  return $items;
+}
+
+/**
+ * Implements hook_cronapi().
+ */
+function delivery_messages_cronapi($op, $job = NULL) {
+  $items['delivery_messages_cron'] = array(
+    'description' => 'Send mail to users',
+    'rule' => '*/5 * * * *',
+  );
+
+  return $items;
+}
+
+/**
+ * Implements hook_cron().
+ */
+function delivery_messages_cron() {
+  $items = delivery_messages_load_user_data();
+
+  if ($items) {
+    $queue = DrupalQueue::get('delivery_messages_queue');
+    $queue->createQueue();
+
+    if ($queue->numberOfItems() == 0) {
+      foreach ($items as $item) {
+        $queue->createItem($item);
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_cron_queue_info().
+ */
+function delivery_messages_cron_queue_info() {
+  $queue['delivery_messages_queue'] = array(
+    'worker callback' => 'delivery_messages_item_process',
+    'time' => 1,
+  );
+  return $queue;
+}
+
+/**
+ * Functions for sending mail.
+ */
+function delivery_messages_item_process($data) {
+  $site_name = variable_get('site_name', '');
+  $user = user_load($data);
+  $message_array = variable_get('delivery_messages_messages');
+  foreach ($message_array as $delta => $key) {
+    if ($key['active'] == 1) {
+      $message = $key['message'];
+      $subject = t('Notification from !sitename', array('!sitename' => $site_name));
+      $body = str_replace('[user:name]', $user->name, $message);
+      $body = token_replace($body);
+      $params = array(
+        'subject' => $subject,
+        'body' => $body,
+      );
+      drupal_mail('delivery_messages', 'send_notifications', $user->mail, language_default(), $params);
+      break;
+    }
+  }
+}
+
+/**
+ * Implements hook_mail().
+ */
+function delivery_messages_mail($key, &$message, $params) {
+  if ($key == 'send_notifications') {
+    $message['subject'] = $params['subject'];
+    $message['body'][] = $params['body'];
+  }
+}

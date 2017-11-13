@@ -9,39 +9,46 @@
   left: 50%;
   margin-top: -150px;
   margin-left: -150px;
-  display: none; /
-  opacity: 0;
   z-index: 5;
   padding: 20px 10px;
+  display: none;
 }
 
-#close {
+.close-modal {
   width: 21px;
   height: 21px;
-  position: absolute;
-  top: 10px;
-  right: 10px;
   cursor: pointer;
-  display: block;
+  display: inline-block;
+  position: relative;
+  float: right;
+  text-align: center;
+  border: 2px solid;
+  border-radius: 25px;
+  bottom: 4px;
 }
 
-#overlay {
+.header-modal {
+  margin-bottom: 5px;
+}
+
+.modal-overlay {
   width: 100%;
   height: 100%;
   position: fixed;
   top: 0;
   left: 0;
-  z-index:1;
-  background-color:#000;
-  opacity:0.8;
-  -moz-opacity:0.8;
-  display:none;
+  z-index: 1;
+  background-color: #000;
+  opacity: 0.8;
+  -moz-opacity: 0.8;
+  display: none;
 }
 
-.modal-message #title{
+.modal-message .modal-title {
   cursor: pointer;
   -moz-user-select: none;
   -khtml-user-select: none;
   user-select: none;
+  display: inline-block;
+  position: relative;
 }
-

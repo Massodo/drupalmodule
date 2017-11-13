@@ -1,0 +1,45 @@
+<?php
+
+/**
+ * @file
+ * Tests for user_discount.module.
+ */
+
+/**
+ * Tests the functionality of the Simpletest example content type.
+ */
+class InternetReceptionTestCase extends DrupalWebTestCase {
+
+  /**
+   * Get info about this module.
+   */
+  public static function getInfo() {
+    return array(
+      'name' => 'InternetReception',
+      'description' => 'Testing internet_reception module.',
+      'group' => 'Custom',
+    );
+  }
+
+  /**
+   * Set up this module.
+   */
+  public function setUp() {
+    parent::setUp(array('internet_reception'));
+    module_enable(array('internet_reception'), TRUE);
+  }
+
+  /**
+   * Testing custom functions.
+   */
+  public function testUserDiscount() {
+    $edit = array();
+    $edit['name'] = $this->randomName(10);
+    $edit["email"] = 'test@test.ru';
+    $edit["age"] = 2;
+    $edit["subject"] = $this->randomName(10);
+    $edit["message"] = $this->randomName(10);
+    $this->drupalPost('itnernet-reception-page', $edit, t('Submit'));
+  }
+
+}

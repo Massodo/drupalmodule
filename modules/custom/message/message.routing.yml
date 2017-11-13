@@ -1,23 +1,15 @@
-message.hello:
-  path: '/testform'
-  defaults:
-    _controller: '\Drupal\message\Controller\TemplatesController::content'
-    _title: 'Template'
-  requirements:
-    _permission: 'access content'
+message.admin_config:
+ path: '/admin/config/status-message'
+ defaults:
+   _controller: '\Drupal\system\Controller\SystemController::systemAdminMenuBlockPage'
+   _title: 'Settings for status messages'
+ requirements:
+   _permission: 'access administration pages'
 
-message.settings:
-  path: '/admin/structure/message/settings'
-  defaults:
-    _form: '\Drupal\message\Form\SettingsForm'
-    _title: 'message'
-  requirements:
-    _permission: 'administer site configuration'
-
-message.modalform:
-  path: '/modalform'
-  defaults:
-    _form: '\Drupal\message\Form\ModalForm'
-    _title: 'Internet Reception'
-  requirements:
-    _permission: 'access content'
+modal_window.admin_settings:
+ path: '/admin/config/status-message/modal-window'
+ defaults:
+   _form: '\Drupal\message\Form\SettingsForm'
+   _title: 'Settings for modal window'
+ requirements:
+   _permission: 'administer site configuration'

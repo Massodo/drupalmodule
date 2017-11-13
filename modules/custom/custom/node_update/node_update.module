@@ -1,0 +1,28 @@
+<?php
+
+/**
+ * @file
+ * Build page for node_update.
+ */
+
+/**
+ * Include .inc files.
+ */
+require_once 'includes/node_update.batch.inc';
+
+/**
+ * Implements hook_menu().
+ */
+function node_update_menu() {
+  $items = array();
+
+  $items['node_update'] = array(
+    'title' => 'Batch process',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('node_update_form'),
+    'access callback' => TRUE,
+    'file' => 'includes/node_update.form.inc',
+  );
+
+  return $items;
+}

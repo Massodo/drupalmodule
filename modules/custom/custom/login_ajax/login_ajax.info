@@ -1,0 +1,4 @@
+name = Login AJAX
+description = Custom module for login.
+package = Custom
+core = 7.x

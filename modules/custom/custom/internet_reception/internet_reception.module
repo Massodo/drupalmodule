@@ -1,0 +1,86 @@
+<?php
+
+/**
+ * @file
+ * Build page for internet_reception.
+ */
+
+/**
+ * Implements hook_menu().
+ */
+function internet_reception_menu() {
+  $items = array();
+  $items['itnernet_reception-page'] = array(
+    'title' => 'Internet Reception',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('itnernet_reception_page_form'),
+    'access callback' => TRUE,
+    'file' => 'includes/internet_reception.form.inc',
+  );
+
+  return $items;
+}
+
+/**
+ * Validate function for itnernet_reception_page_form.
+ */
+function itnernet_reception_page_form_validate($form, &$form_state) {
+  if (empty($form_state['values']['name'])) {
+    form_set_error('name', t('Name field must not be empty'));
+  }
+
+  if (empty($form_state['values']['email'])) {
+    form_set_error('email', t('E-Mail field must not be empty'));
+  }
+
+  if (!valid_email_address($form_state['values']['email'])) {
+    form_set_error('email', t('The email address appears to be invalid'));
+  }
+
+  if (empty($form_state['values']['age'])) {
+    form_set_error('age', t('Age field must not be empty'));
+  }
+
+  if (empty($form_state['values']['subject'])) {
+    form_set_error('subject', t('Subject field must not be empty'));
+  }
+
+  if (empty($form_state['values']['message'])) {
+    form_set_error('message', t('Message field must not be empty'));
+  }
+}
+
+/**
+ * Submit function for itnernet_reception_page_form.
+ */
+function itnernet_reception_page_form_submit($form, &$form_state) {
+  $to = variable_get('site_mail', '');
+  $from = $form_state['values']['email'];
+  $subject = $form_state['values']['subject'];
+  $name = $form_state['values']['name'];
+  $age = $form_state['values']['age'];
+  $body = '';
+  $body .= 'Subject: ' . $form_state['values']['subject'] . '<br>';
+  $body .= 'Name: ' . $form_state['values']['name'] . '<br>';
+  $body .= 'Age: ' . $form_state['values']['age'] . '<br>';
+  $body .= 'Message: ' . $form_state['values']['message'];
+  $params = array(
+    'subject' => $subject,
+    'body' => $body,
+  );
+  if (drupal_mail('itnernet_reception_page_form', 'message', $to, language_default(), $params, $from)) {
+    drupal_set_message('Message sent successfully!');
+  }
+}
+
+/**
+ * Implements hook_mail().
+ */
+function itnernet_reception_page_form_mail($key, &$message, $params) {
+  switch ($key) {
+    case 'message':
+      $message['subject'] = $params['subject'];
+      $message['body'][] = $params['body'];
+      break;
+  }
+}

@@ -1,34 +1,28 @@
 <?php
 
 /**
- * @file
- * Contains message.module..
+ * Implements hook_page_attachments().
  */
-
-
-/**
- * Implements hook_theme().
- * @return mixed
- */
-function message_theme() {
-  $theme['hello_page'] = [
-  'variables' => [
-    'content' => NULL,
-    'title' => NULL,
-    'message' => NULL,
-    'styles' => NULL
-  ],
-  'template' => 'hello',
-  ];
-
-  return $theme;
-}
-
-/**
- * Implements hook_form_alter().
- */
-function message_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id)
+function message_page_attachments(array &$attachments)
 {
-  //\Drupal\Core\Form\drupal_set_message();
+  $config = \Drupal ::config('message.settings');
+  $attachments['#attached']['library'][] = 'message/modal_window';
+  $attachments['#attached']['drupalSettings']['message']['width'] = $config -> get('width');
+  $attachments['#attached']['drupalSettings']['message']['height'] = $config -> get('height');
+  $attachments['#attached']['drupalSettings']['message']['background'] = $config -> get('background');
+  $attachments['#attached']['drupalSettings']['message']['border'] = $config -> get('border');
+  $attachments['#attached']['drupalSettings']['message']['borderColor'] = $config -> get('borderColor');
+  $attachments['#attached']['drupalSettings']['message']['fontSize'] = $config->get('fontSize');
+  $attachments['#attached']['drupalSettings']['message']['color'] = $config->get('color');
 }
 
+/**
+ * Implements hook_theme_registry_alter().
+ */
+function message_theme_registry_alter(&$theme_registry)
+{
+  $theme_registry['status_messages']['theme paths'] = array(0 => drupal_get_path('module', 'message') . '/templates');
+  $theme_registry['status_messages']['theme path'] = drupal_get_path('module', 'message') . '/templates';
+  $theme_registry['status_messages']['path'] = drupal_get_path('module', 'message') . '/templates';
+  $theme_registry['status_messages']['template'] = 'window';
+}

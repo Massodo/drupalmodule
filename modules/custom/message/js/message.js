@@ -3,13 +3,17 @@
   'use strict'
 
   Drupal.behaviors.message = {
-
+    /**
+     * function add styles to status message window
+     * @param context
+     * @param settings
+     */
     attach: function (context, settings) {
 
-      $('#message').ready(function () {
-        var window = $('#message');
-        var windowSettings = drupalSettings.message;
-        if(windowSettings){
+      $('.modal-message').ready(function () {
+        var window = $('.modal-message');
+        var windowSettings = settings.message;
+        if (windowSettings) {
           window.css('width', windowSettings.width);
           window.css('height', windowSettings.height);
           window.css('background', windowSettings.background);
@@ -17,16 +21,17 @@
           window.css('border-color', windowSettings.borderColor);
           window.css('font-size', windowSettings.fontSize + 'px');
           window.css('color', windowSettings.color);
+          $('.modal-title').text(windowSettings.title);
         }
-        $('#overlay').fadeIn(400, function () {
+        $('.modal-overlay').fadeIn(400, function () {
           window.css('display', 'block').animate({opacity: 1, top: '50%'}, 200);
         });
       });
 
       $('.close').click(function () {
-        $('#message').animate({opacity: 0, top: '45%'}, 200, function () {
-          $('#message').css('display', 'none');
-          $('#overlay').fadeOut(400);
+        $('.modal-message').animate({opacity: 0, top: '45%'}, 200, function () {
+          $('.modal-message').css('display', 'none');
+          $('.modal-overlay').fadeOut(400);
         });
       });
     }
@@ -56,7 +61,7 @@
         }
       });
 
-      $(document).mousemove(function(e) {
+      $(document).mousemove(function (e) {
         if (drag.isDragging) {
           var borderTop = 0;
           var borderBottom = screen.height - 450;
@@ -67,15 +72,11 @@
           delta.y = e.pageY - drag.y;
 
           var currentOffset = $(elem).offset();
-          if((currentOffset.left + delta.x >= borderLeft) && (currentOffset.left + delta.x<= borderRight)){
-            $(elem).offset({
-              left: (currentOffset.left + delta.x)
-            });
+          if ((currentOffset.left + delta.x >= borderLeft) && (currentOffset.left + delta.x<= borderRight)) {
+            $(elem).offset({ left: (currentOffset.left + delta.x )});
           }
-          if((currentOffset.top + delta.y >= borderTop) && (currentOffset.top + delta.y <= borderBottom)){
-            $(elem).offset({
-              top: (currentOffset.top + delta.y)
-            });
+          if ((currentOffset.top + delta.y >= borderTop) && (currentOffset.top + delta.y <= borderBottom)) {
+            $(elem).offset({ top: (currentOffset.top + delta.y )});
           }
 
           drag.x = e.pageX;

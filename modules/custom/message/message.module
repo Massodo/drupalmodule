@@ -13,6 +13,7 @@ function message_page_attachments(array &$attachments) {
   $attachments['#attached']['drupalSettings']['message']['borderColor'] = $config -> get('borderColor');
   $attachments['#attached']['drupalSettings']['message']['fontSize'] = $config->get('fontSize');
   $attachments['#attached']['drupalSettings']['message']['color'] = $config->get('color');
+  $attachments['#attached']['drupalSettings']['message']['title'] = $config->get('title');
 }
 
 /**

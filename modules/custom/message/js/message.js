@@ -1,4 +1,4 @@
-(function ($, Drupal, drupalSettings) {
+(function ($, Drupal) {
 
   'use strict'
 
@@ -9,8 +9,6 @@
      * @param settings
      */
     attach: function (context, settings) {
-
-      $('.modal-message').ready(function () {
         var window = $('.modal-message');
         var windowSettings = settings.message;
         if (windowSettings) {
@@ -21,17 +19,15 @@
           window.css('border-color', windowSettings.borderColor);
           window.css('font-size', windowSettings.fontSize + 'px');
           window.css('color', windowSettings.color);
-          $('.modal-title').text(windowSettings.title);
         }
-        $('.modal-overlay').fadeIn(400, function () {
+        $('.modal-overlay', context).fadeIn(400, function () {
           window.css('display', 'block').animate({opacity: 1, top: '50%'}, 200);
         });
-      });
 
       $('.close').click(function () {
-        $('.modal-message').animate({opacity: 0, top: '45%'}, 200, function () {
-          $('.modal-message').css('display', 'none');
-          $('.modal-overlay').fadeOut(400);
+        $('.modal-message', context).animate({opacity: 0, top: '45%'}, 200, function () {
+          $('.modal-message', context).css('display', 'none');
+          $('.modal-overlay', context).fadeOut(400);
         });
       });
     }
@@ -39,8 +35,8 @@
 
   Drupal.behaviors.drag = {
     attach: function (context, settings) {
-      var elem = $('.modal-message');
-      var title = $('.modal-message .modal-title');
+      var elem = $('.modal-message', context);
+      var title = $('.modal-message .modal-title', context);
 
       var drag = {
         x: 0,
@@ -89,4 +85,4 @@
       });
     }
   }
-})(jQuery, Drupal, drupalSettings)
+})(jQuery, Drupal)

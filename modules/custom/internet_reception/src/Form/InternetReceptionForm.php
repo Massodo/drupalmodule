@@ -75,8 +75,7 @@ class InternetReceptionForm extends FormBase {
   /**
    * {@inheritdoc}
    */
-  public function submitForm(array &$form, FormStateInterface $form_state)
-  {
+  public function submitForm(array &$form, FormStateInterface $form_state) {
     $account = \Drupal::currentUser();
     $system_site_config = \Drupal::config('system.site');
 

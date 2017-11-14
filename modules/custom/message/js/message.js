@@ -34,7 +34,12 @@
   }
 
   Drupal.behaviors.drag = {
-    attach: function (context, settings) {
+    /**
+     * dragable modal message
+     * @param context
+     * @param settings
+     */
+    attach: function (context) {
       var elem = $('.modal-message', context);
       var title = $('.modal-message .modal-title', context);
 

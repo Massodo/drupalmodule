@@ -3,8 +3,7 @@
 /**
  * Implements hook_page_attachments().
  */
-function message_page_attachments(array &$attachments)
-{
+function message_page_attachments(array &$attachments) {
   $config = \Drupal ::config('message.settings');
   $attachments['#attached']['library'][] = 'message/modal_window';
   $attachments['#attached']['drupalSettings']['message']['width'] = $config -> get('width');
@@ -19,10 +18,10 @@ function message_page_attachments(array &$attachments)
 /**
  * Implements hook_theme_registry_alter().
  */
-function message_theme_registry_alter(&$theme_registry)
-{
-  $theme_registry['status_messages']['theme paths'] = array(0 => drupal_get_path('module', 'message') . '/templates');
-  $theme_registry['status_messages']['theme path'] = drupal_get_path('module', 'message') . '/templates';
-  $theme_registry['status_messages']['path'] = drupal_get_path('module', 'message') . '/templates';
+function message_theme_registry_alter(&$theme_registry) {
+  $path = drupal_get_path('module', 'message') . '/templates';
+  $theme_registry['status_messages']['theme paths'] = array(0 => $path);
+  $theme_registry['status_messages']['theme path'] = $path;
+  $theme_registry['status_messages']['path'] = $path;
   $theme_registry['status_messages']['template'] = 'window';
 }

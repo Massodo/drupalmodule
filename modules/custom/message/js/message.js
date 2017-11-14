@@ -19,7 +19,7 @@
           window.css('color', windowSettings.color);
         }
         $('#overlay').fadeIn(400, function () {
-          window.css('display', 'block');//.animate({opacity: 1, top: '50%'}, 200);
+          window.css('display', 'block').animate({opacity: 1, top: '50%'}, 200);
         });
       });
 
@@ -34,40 +34,58 @@
 
   Drupal.behaviors.drag = {
     attach: function (context, settings) {
+      var elem = $('.modal-message');
+      var title = $('.modal-message .modal-title');
 
-      var windowX;
-      var windowY;
-      var drag = false;
+      var drag = {
+        x: 0,
+        y: 0,
+        isDragging: false
+      };
 
-      $('#title').mousedown(function (e) {
-        var offset = $('#message').offset();
-        windowX = e.clientX - (offset.left + 110);
-        windowY = e.clientY - (offset.top + 140);
-        drag = true;
-      })
+      var delta = {
+        x: 0,
+        y: 0
+      };
 
-      $('#message').mouseup(function () {
-        drag = false;
-      })
-
-      $('#message').mousemove(function (e) {
-        if(drag){
-          var top = e.clientY - windowY;
-          var left = e.clientX - windowX;
-          var borderTop = 0 + drupalSettings.message.height / 2;
-          var borderBottom = $(window).height() - drupalSettings.message.height / 2;
-          var borderLeft = 0 + drupalSettings.message.width / 2;
-          var borderRight = $(window).width() - drupalSettings.message.width / 2;
-
-          if (top >= borderTop && top <= borderBottom) {
-            $('#message', context).css('top', top);
-          }
-
-          if (left >= borderLeft && left <= borderRight) {
-            $('#message', context).css('left', left);
-          }
+      title.on('mousedown', function (e) {
+        if (!drag.isDragging) {
+          drag.isDragging = true;
+          drag.x = e.pageX;
+          drag.y = e.pageY;
         }
-      })
-    },
+      });
+
+      $(document).mousemove(function(e) {
+        if (drag.isDragging) {
+          var borderTop = 0;
+          var borderBottom = screen.height - 450;
+          var borderLeft = 0;
+          var borderRight = screen.width - 300;
+
+          delta.x = e.pageX - drag.x;
+          delta.y = e.pageY - drag.y;
+
+          var currentOffset = $(elem).offset();
+          if((currentOffset.left + delta.x >= borderLeft) && (currentOffset.left + delta.x<= borderRight)){
+            $(elem).offset({
+              left: (currentOffset.left + delta.x)
+            });
+          }
+          if((currentOffset.top + delta.y >= borderTop) && (currentOffset.top + delta.y <= borderBottom)){
+            $(elem).offset({
+              top: (currentOffset.top + delta.y)
+            });
+          }
+
+          drag.x = e.pageX;
+          drag.y = e.pageY;
+        }
+      });
+
+      $(document).mouseup(function() {
+        drag.isDragging = false;
+      });
+    }
   }
 })(jQuery, Drupal, drupalSettings)

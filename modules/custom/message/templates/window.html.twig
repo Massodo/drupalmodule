@@ -4,7 +4,7 @@
         {{ attach_library('bartik/messages') }}
         <div id = "message" class="modal-message">
             <div id = "header-modal" class="header-modal">
-                <div id="title" class="modal-title">Status Message</div>
+                <div id="title" class="modal-title">{{ title }}</div>
                 <div id="close" class="close-modal close">X</div>
             </div>
             <div id="text" class="message-text">{{ parent() }}</div>

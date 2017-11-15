@@ -1,0 +1,35 @@
+<?php
+
+use \Drupal\Core\Entity\EntityTypeInterface;
+use \Drupal\Core\Field\BaseFieldDefinition;
+
+/**
+ * Implements hook_theme().
+ */
+function user_discount_code_theme () {
+  $theme['discountPage'] = [
+    'variables' => [
+      'title' => NULL,
+      'message' => NULL,
+    ],
+  'template' => 'user-discount-code',
+  ];
+
+  return $theme;
+}
+
+/**
+ * Implements hook_entity_base_field_info().
+ */
+function user_discount_code_entity_base_field_info (EntityTypeInterface $entity_type) {
+
+  $fields = [];
+  if($entity_type->id() == 'user'){
+    $fields['discount_code'] = BaseFieldDefinition::create('uuid')
+    ->setLabel('User discount node')
+    ->setRevisionable(true)
+    ->setSetting('target_type', 'discount_code')
+    ->setSetting('handler', 'default');
+  }
+  return $fields;
+}

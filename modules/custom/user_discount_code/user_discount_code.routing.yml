@@ -15,8 +15,8 @@ discount_code.admin_settings:
    _permission: 'administer site configuration'
 
 discount_code.content:
-  path: '/discount'
+  path: '/user/discount'
   defaults:
     _controller: '\Drupal\user_discount_code\Controller\CodePageController::pageController'
   requirements:
-    _permission: 'access content'
+    _user_is_logged_in: 'TRUE'

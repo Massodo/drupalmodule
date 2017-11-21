@@ -31,8 +31,8 @@ function user_discount_code_entity_insert ($entity) {
 
   $queryDisc = \Drupal::database()->insert('discount_code');
   $queryDisc->fields([
-  'uid',
-  'discount',
+    'uid',
+    'discount',
   ]);
 
   $queryDisc->values([

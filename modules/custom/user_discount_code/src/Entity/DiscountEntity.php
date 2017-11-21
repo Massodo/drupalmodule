@@ -16,25 +16,31 @@ use Drupal\Core\Field\BaseFieldDefinition;
  *   base_table = "discount_code",
  *   entity_keys = {
  *     "id" = "id",
- *     "uuid" = "uuid",
- *     "code" = "code"
+ *     "uid" = "user_id",
+ *     "discount" = "discount_code"
  *   },
  * )
  */
-
 class DiscountEntity extends ContentEntityBase{
 
   public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
     $fields['id'] = BaseFieldDefinition::create('integer')
     ->setLabel(t('Discount ID'))
     ->setDescription(t('ID'));
-    $fields['uuid'] = BaseFieldDefinition::create('uuid')
-    ->setLabel(t('UUID'))
-    ->setDescription(t('Discount UUID'));
-    $fields['code'] = BaseFieldDefinition::create('string')
+
+    $fields['uid'] = BaseFieldDefinition::create('entity_reference')
+    ->setLabel(t('Authored by'))
+    ->setDescription(t('The user ID of author of the Discount code entity.'))
+    ->setSetting('target_type', 'user')
+    ->setRevisionable(TRUE)
+    ->setSetting('handler', 'default')
+    ->setTranslatable(TRUE);
+
+    $fields['discount'] = BaseFieldDefinition::create('string')
     ->setLabel(t('Code'))
     ->setDescription(t('User discount code'))
     ->setSettings(array('max_length' => 10,));
+
     return $fields;
   }
 }

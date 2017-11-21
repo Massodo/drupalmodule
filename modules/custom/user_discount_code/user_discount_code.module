@@ -1,11 +1,7 @@
 <?php
 
-global $user;
-
-use \Drupal\Core\Entity\EntityTypeInterface;
-use \Drupal\Core\Field\BaseFieldDefinition;
-use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Form\FormStateInterface;
+use \Drupal\Core\Render\BubbleableMetadata;
 
 /**
  * Implements hook_theme().
@@ -75,7 +71,7 @@ function user_discount_code_token_info () {
 /**
  * Implements hook_tokens().
  */
-function user_discount_code_tokens ($type, $tokens, array $data, array $options, \Drupal\Core\Render\BubbleableMetadata $bubbleable_metadata) {
+function user_discount_code_tokens ($type, $tokens, array $data, array $options, BubbleableMetadata $bubbleable_metadata) {
   $replacements = [];
   $username = Drupal::currentUser()->getAccountName();
   $id = Drupal::currentUser()->id();

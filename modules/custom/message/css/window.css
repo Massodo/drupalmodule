@@ -9,7 +9,7 @@
   left: 50%;
   margin-top: -150px;
   margin-left: -150px;
-  z-index: 5;
+  z-index: 500;
   padding: 20px 10px;
   display: none;
   -moz-user-select: none;
@@ -47,7 +47,7 @@
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 1;
+  z-index: 100;
   background-color: #000;
   opacity: 0.8;
   -moz-opacity: 0.8;

@@ -1,0 +1,14 @@
+<?php
+
+use Drupal\Core\Entity\ContentEntityInterface;
+use Drupal\field\Entity\FieldStorageConfig;
+use Drupal\Core\Entity\EntityInterface;
+
+function note_allowed_values_function(FieldStorageConfig $definition, ContentEntityInterface $entity = NULL,
+                                      $cacheable) {
+  $options = [
+  'Actual' => 'Actual',
+  'Expired' => 'Expired',
+  ];
+  return $options;
+}

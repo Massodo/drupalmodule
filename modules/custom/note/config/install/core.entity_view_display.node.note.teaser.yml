@@ -1,0 +1,33 @@
+langcode: en
+status: true
+dependencies:
+    config:
+        - core.entity_view_mode.node.teaser
+        - field.field.node.note.body
+        - field.field.node.note.note_field_status
+        - node.type.note
+    module:
+        - text
+        - user
+        - options
+id: node.note.teaser
+targetEntityType: node
+bundle: note
+mode: teaser
+content:
+    body:
+        label: hidden
+        type: text_summary_or_trimmed
+        weight: 101
+        settings:
+            trim_length: 600
+        third_party_settings: {  }
+    note_field_status:
+        label: above
+        type: list_default
+        weight: 102
+        settings: {  }
+        third_party_settings: {  }
+    links:
+        weight: 103
+hidden: {  }

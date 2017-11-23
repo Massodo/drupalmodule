@@ -1,7 +1,8 @@
 <?php
 
 use Drupal\Core\Form\FormStateInterface;
-use \Drupal\Core\Render\BubbleableMetadata;
+use Drupal\Core\Render\BubbleableMetadata;
+use Drupal\Core\Entity\EntityInterface;
 
 /**
  * Implements hook_theme().
@@ -19,9 +20,9 @@ function user_discount_code_theme () {
 }
 
 /**
- * Implements hook_entity_insert().
+ * Implements hook_ENTITY_TYPE_insert().
  */
-function user_discount_code_entity_insert ($entity) {
+function user_discount_code_user_insert (EntityInterface $entity) {
   $keyspace = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
   $code = '';
   $max = mb_strlen($keyspace, '8bit') - 1;
@@ -36,8 +37,8 @@ function user_discount_code_entity_insert ($entity) {
   ]);
 
   $queryDisc->values([
-  $entity->id(),
-  $code,
+    $entity->id(),
+    $code,
   ]);
 
   $queryDisc->execute();

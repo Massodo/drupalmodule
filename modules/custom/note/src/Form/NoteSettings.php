@@ -25,10 +25,9 @@ class NoteSettings extends ConfigFormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
-
     $form['date'] = [
       '#type' => 'date',
-      '#title' => 'Date',
+      '#title' => t('Date'),
       '#default_value' => $this->config('node.settings')->get('date'),
     ];
     $form['reset'] = [
@@ -39,7 +38,6 @@ class NoteSettings extends ConfigFormBase {
     '#type' => 'submit',
     '#value' => t('Update status'),
     ];
-
 
     return parent::buildForm($form,$form_state);
   }

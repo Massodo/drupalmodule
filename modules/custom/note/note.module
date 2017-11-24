@@ -6,23 +6,6 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Entity\EntityInterface;
 
 /**
- * Implements hook_theme().
- */
-function note_theme () {
-  $theme['settingsNote'] = [
-  'variables' => [
-    'filed' => NULL,
-    'titleButton' => NULL,
-    'buttons' => NULL,
-    'parent' => NULL
-  ],
-  'template' => 'note-settings-page',
-  ];
-
-  return $theme;
-}
-
-/**
  * Set base list value in note content
  * @param FieldStorageConfig $definition
  * @param ContentEntityInterface|NULL $entity
@@ -42,25 +25,42 @@ function note_allowed_values_function(FieldStorageConfig $definition, ContentEnt
  * Implements hook_ENTITY_TYPE_insert().
  */
 function note_node_insert (EntityInterface $entity) {
-  if($entity->bundle() == 'note'){
+  if($entity->bundle() == 'note') {
     $id = $entity->id();
 
     $query = Drupal::database()->select('node_field_data', 'node_field_data');
     $query->addField('node_field_data', 'created');
-    $query->condition('vid',$id, '=');
+    $query->condition('vid', $id, '=');
     $dateNode = $query->execute()->fetchField();
 
     $dateNode = Drupal::service('date.formatter')->format($dateNode, 'html_date');
     $dateSettings = Drupal::config('node.settings')->get('date');
-    if($dateSettings >= $dateNode){
+    if ($dateSettings >= $dateNode) {
       $status = 'Expired';
     } else {
       $status = 'Actual';
     }
+
     $queryA = Drupal::database()->insert('node__note_field_status');
-    $queryA->fields(['note_field_status_value']);
-    $queryA->values([$status]);
-    //$queryA->execute();
+    $queryA->fields([
+      'bundle',
+      'deleted',
+      'entity_id',
+      'revision_id',
+      'langcode',
+      'delta',
+      'note_field_status_value'
+    ]);
+    $queryA->values([
+      'note',
+      0,
+      $id,
+      $id,
+      'en',
+      0,
+      $status
+    ]);
+    $queryA->execute();
   }
 }
 
@@ -77,11 +77,11 @@ function note_form_node_settings_form_alter (&$form, FormStateInterface $form_st
  */
 function settings_note_reset_submit ($form, FormStateInterface $form_state) {
   batch_set(array(
-  'operations' => [
-    array('reset_status_note', array())
-  ],
-  'finished' => 'status_note_end',
-  'title' => 'Reset status',
+    'operations' => [
+      array('reset_status_note', array())
+    ],
+    'finished' => 'status_note_end',
+    'title' => 'Reset status',
     )
   );
 }
@@ -104,7 +104,6 @@ function settings_note_update_submit ($form, FormStateInterface $form_state) {
  * Drop status filed in node__note_field_status table
  */
 function reset_status_note(){
-  drupal_set_message('start');
   Drupal::database()->delete('node__note_field_status')->execute();
 }
 
@@ -116,14 +115,14 @@ function update_status_note(){
   Drupal::database()->delete('node__note_field_status')->execute();
   $query = Drupal::database()->select('node_field_data', 'node_field_data');
   $query->addField('node_field_data', 'nid');
-  $query->condition('type','note', '=');
+  $query->condition('type', 'note', '=');
   $ids = $query->execute()->fetchCol();
 
   foreach ($ids as $id){
 
     $query = Drupal::database()->select('node_field_data', 'node_field_data');
     $query->addField('node_field_data', 'created');
-    $query->condition('vid',$id, '=');
+    $query->condition('vid', $id, '=');
     $dateNode = $query->execute()->fetchField();
 
     $dateNode = Drupal::service('date.formatter')->format($dateNode, 'html_date');
@@ -153,7 +152,6 @@ function update_status_note(){
       0,
       $status
     ]);
-
     $query->execute();
   }
 }
@@ -163,4 +161,5 @@ function update_status_note(){
  */
 function status_note_end(){
   drupal_set_message('Success!');
+  drupal_flush_all_caches();
 }

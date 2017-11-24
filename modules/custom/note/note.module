@@ -111,7 +111,6 @@ function reset_status_note(){
  * Drop status filed in node__note_field_status table and sets new value.
  */
 function update_status_note(){
-  drupal_set_message('start');
   Drupal::database()->delete('node__note_field_status')->execute();
   $query = Drupal::database()->select('node_field_data', 'node_field_data');
   $query->addField('node_field_data', 'nid');

@@ -23,12 +23,8 @@ function user_discount_code_theme () {
  * Implements hook_ENTITY_TYPE_insert().
  */
 function user_discount_code_user_insert (EntityInterface $entity) {
-  $keyspace = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-  $code = '';
-  $max = mb_strlen($keyspace, '8bit') - 1;
-  for ($i = 0; $i < 10; ++$i) {
-    $code .= $keyspace[random_int(0, $max)];
-  }
+
+  $code = generateCode();
 
   $queryDisc = \Drupal::database()->insert('discount_code');
   $queryDisc->fields([
@@ -42,6 +38,27 @@ function user_discount_code_user_insert (EntityInterface $entity) {
   ]);
 
   $queryDisc->execute();
+}
+
+function generateCode(){
+  $keyspace = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  $code = '';
+  $max = mb_strlen($keyspace, '8bit') - 1;
+  for ($i = 0; $i < 10; ++$i) {
+    $code .= $keyspace[random_int(0, $max)];
+  }
+
+  $query = Drupal::database()->select('discount_code', 'discount_code');
+  $query->addField('discount_code', 'discount');
+  $codes = $query->execute()->fetchCol();
+
+  foreach ($codes as $item){
+    if($item == $code){
+      return $code = generateCode();
+    }
+  }
+
+  return $code;
 }
 
 /**

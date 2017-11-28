@@ -55,9 +55,26 @@ function mailing_tokens ($type, $tokens, array $data, array $options, Bubbleable
  */
 function mailing_cron () {
   $queue = \Drupal::queue('send_message_queue');
-  while ($item = $queue->claimItem()){
-    \Drupal::service('plugin.manager.mail')->mail('smtp', 'smtp-test',
-    $item->data['mail'], $item->data['toMail'] , $item->data['message']);
+  $item = $queue->claimItem();
+  while ($item){
+
+    $mail_manager = Drupal::service('plugin.manager.mail');
+    $mail_manager->mail('mailing', 'send_message_queue', $item->data['toMail'], 'en',
+    $item->data['message'], $item->data['mail'], TRUE);
+
     $queue->deleteItem($item);
+    $item = $queue->claimItem();
+  }
+}
+
+/**
+ * Implements hook_mail().
+ */
+function mailing_mail ($key, &$message, $params) {
+  switch ($key) {
+    case 'send_message_queue':
+      $message['subject'] = t('Message form website');
+      $message['body'][] = $params;
+      break;
   }
 }

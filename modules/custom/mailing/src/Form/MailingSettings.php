@@ -79,12 +79,10 @@ class MailingSettings extends ConfigFormBase{
 
       $message = \Drupal::token()->replace($message);
       foreach ($users as $user){
-
         $query = \Drupal::database()->select('users_field_data', 'u');
         $query->addField('u','mail','m');
         $query->condition('u.name', $user, '=');
         $email = $query->execute()->fetchField();
-        drupal_set_message($email);
         if($start){
           $messageFinal = str_replace('#user#', $user, $message);
         }

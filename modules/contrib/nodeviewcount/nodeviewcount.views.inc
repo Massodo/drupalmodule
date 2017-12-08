@@ -22,6 +22,17 @@ function nodeviewcount_views_data() {
       'field' => 'nid',
     ],
   ];
+  $data['nodeviewcount']['countviews'] = [
+    'title' => t('Count view'),
+    'help' => t('Count view'),
+    'relationship' => [
+      'base' => 'nodeviewcount',
+      'base field' => 'nid',
+      'id' => 'standard',
+      'label' => t('Count of views'),
+    ],
+    
+  ];
   $data['nodeviewcount']['nid'] = [
     'title' => t('Node id'),
     'help' => t('Node id.'),

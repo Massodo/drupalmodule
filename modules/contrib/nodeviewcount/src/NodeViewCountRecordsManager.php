@@ -47,6 +47,7 @@ class NodeViewCountRecordsManager implements NodeViewCountRecordsManagerInterfac
    * {@inheritdoc}
    */
   public function insertRecord($uid, $nid) {
+    drupal_set_message('insert');
     $timeZone = date_default_timezone_get();
     $dateTime = new DrupalDateTime('NOW', $timeZone);
     $fields = array(
@@ -63,6 +64,7 @@ class NodeViewCountRecordsManager implements NodeViewCountRecordsManagerInterfac
    * {@inheritdoc}
    */
   public function getNodeViewsCount(NodeInterface $node, UserInterface $user = NULL, $distinct_users = FALSE) {
+    drupal_set_message('get node view count');
     if (!$this->isRecordableForNodeType($node)) {
       return FALSE;
     }

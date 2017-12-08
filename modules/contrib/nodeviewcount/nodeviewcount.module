@@ -14,10 +14,13 @@ use Drupal\node\NodeInterface;
  */
 function nodeviewcount_node_view(array &$build, NodeInterface $node, EntityViewDisplayInterface $display, $view_mode) {
   /** @var \Drupal\nodeviewcount\NodeViewCountRecordsManager $records_manager */
+  drupal_set_message('test node view');
   $records_manager = Drupal::service('nodeviewcount.records_manager');
   /** @var \Drupal\user\UserInterface $user */
   $user = Drupal::currentUser();
   if ($records_manager->isRecordableForNodeType($node) && $records_manager->isRecordableForUserRole($user) && $records_manager->isRecordableForViewMode($view_mode)) {
+    drupal_set_message('test node view if true');
+    $records_manager->insertRecord($user->id(), $node->id());
     $build['#attached']['library'][] = 'nodeviewcount/nodeviewcount.base';
     $build['#attached']['drupalSettings']['nodeviewcount']['url'] = Url::fromRoute('nodeviewcount.update_counter')
       ->toString();
@@ -35,6 +38,7 @@ function nodeviewcount_node_view(array &$build, NodeInterface $node, EntityViewD
  */
 function nodeviewcount_cron() {
   /** @var \Drupal\nodeviewcount\NodeViewCountRecordsManager $records_manager */
+  drupal_set_message('corn');
   $records_manager = Drupal::service('nodeviewcount.records_manager');
   $logs_life_time = $records_manager->getLogsLifeTime();
   if ($logs_life_time > 0) {

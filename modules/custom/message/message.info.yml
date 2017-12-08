@@ -1,6 +1,0 @@
-name: 'Modal Status Message'
-description: 'Module for modal status message'
-package: Custom
-core: 8.x
-type: module
-configure: modal_window.admin_settings

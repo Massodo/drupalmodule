@@ -32,5 +32,9 @@ php_xdebug_remote_enable: on
 php_xdebug_remote_connect_back: on
 php_xdebug_idekey: "vagrant"
 
-
-
+# Cron jobs are added to the vagrant user's crontab. Keys include name
+# (required), minute, hour, day, weekday, month, job (required), and state.
+drupalvm_cron_jobs:
+  - name: "Drupal Cron"
+    minute: "*/1"
+    job: "{{ drush_path }} -r {{ drupal_core_path }} core-cron"

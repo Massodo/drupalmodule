@@ -1,9 +1,0 @@
-modal_window:
- version: 1.x
- css:
-   theme:
-     css/window.css: {}
- js:
-   js/message.js: {}
- dependencies:
-   - core/drupal.dialog.ajax

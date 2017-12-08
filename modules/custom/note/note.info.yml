@@ -1,8 +1,0 @@
-name: 'Note content type'
-description: 'Module add Note content type'
-package: Custom
-core: 8.x
-type: module
-configure: note.admin_settings
-dependencies:
-  - node

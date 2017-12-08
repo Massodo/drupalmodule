@@ -1,5 +1,0 @@
-name: 'User discount code'
-description: 'Module for generate discount code'
-package: Custom
-core: 8.x
-type: module

@@ -1,7 +1,0 @@
-internet_reception.example_form:
-  path: '/form'
-  defaults:
-    _form: '\Drupal\internet_reception\Form\InternetReceptionForm'
-    _title: 'Internet Reception'
-  requirements:
-    _permission: 'access content'

@@ -99,6 +99,11 @@ class NodeViewCountSettingsForm extends ConfigFormBase {
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
     $config = $this->config('nodeviewcount.settings');
+    $a = $config->get('duplicate_views');
+    foreach ($a as $item){
+      drupal_set_message($item);
+    }
+    //drupal_set_message('test:' . $config->get('duplicate_views'));
 
     $form['node_types'] = [
       '#title' => $this->t('Node types'),
@@ -130,6 +135,14 @@ class NodeViewCountSettingsForm extends ConfigFormBase {
       '#type' => 'checkboxes',
       '#options' => $this->getRoleNamesOptions($config->get('user_roles')),
       '#default_value' => $config->get('excluded_user_roles'),
+    ];
+
+    $form['duplicate_views'] = [
+      '#title' => t('duplicate'),
+      '#description' => t('desc'),
+      '#type' => 'checkboxes',
+      '#options' => array('Yes' => $this->t('Yes')),
+      '#default_value' => $config->get('duplicate_views'),
     ];
 
     $form['logs_life_time'] = [
@@ -251,6 +264,7 @@ class NodeViewCountSettingsForm extends ConfigFormBase {
       ->set('user_roles', array_keys($counting_user_roles))
       ->set('excluded_user_roles', array_keys($excluded_user_roles))
       ->set('logs_life_time', (int) $form_state->getValue('logs_life_time'))
+      ->set('duplicate_views', $form_state->getValue('duplicate_views'))
       ->save(TRUE);
     $this->cacheTagsInvalidator->invalidateTags(['node_view']);
     parent::submitForm($form, $form_state);

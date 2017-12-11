@@ -6,9 +6,11 @@
  */
 
 /**
- * Implements hook_views_data().
+ * Implements hook_views_data_alter().
+ *
+ * Alter DB tables defined via hook_views_data().
  */
-function nodeviewcount_views_data() {
+function nodeviewcount_views_data_alter (array &$data) {
   $data['nodeviewcount']['table']['group'] = t('Node count');
   $data['nodeviewcount']['table']['base'] = [
     'field' => 'nid',
@@ -22,16 +24,13 @@ function nodeviewcount_views_data() {
       'field' => 'nid',
     ],
   ];
-  $data['nodeviewcount']['countviews'] = [
-    'title' => t('Count view'),
-    'help' => t('Count view'),
-    'relationship' => [
-      'base' => 'nodeviewcount',
-      'base field' => 'nid',
-      'id' => 'standard',
-      'label' => t('Count of views'),
+  $data['nodeviewcount']['count_of_views'] = [
+    'title' => t('Count viewwww'),
+    'field' => [
+      'title' => t('Count view'),
+      'help' => t('Count view'),
+      'id' => 'node_view_count_count_of_views',
     ],
-    
   ];
   $data['nodeviewcount']['nid'] = [
     'title' => t('Node id'),
@@ -93,6 +92,5 @@ function nodeviewcount_views_data() {
       'id' => 'date',
     ],
   ];
-
   return $data;
 }

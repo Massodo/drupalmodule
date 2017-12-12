@@ -3,8 +3,8 @@ description: 'Replace embedded interactive Google Maps (&lt;iframe&gt; tag) to s
 type: module
 # core: 8.x
 configure: gmap_static.gmap_admin
-# Information added by Drupal.org packaging script on 2017-05-15
-version: '8.x-0.0-beta5+1-dev'
+# Information added by Drupal.org packaging script on 2017-12-12
+version: '8.x-0.0-beta5+2-dev'
 core: '8.x'
 project: 'gmap_static'
-datestamp: 1494835388
+datestamp: 1513069690

@@ -14,7 +14,8 @@ function gmap_static_page_attachments(array &$attachments) {
   if ($view_mode && gmap_static_page_is_enabled()) {
     $attachments['#attached']['drupalSettings']['gmap_view_mode'] = [$view_mode];
     $attachments['#attached']['library'][] = 'gmap_static/gmap_static';
-    $attachments['#attached']['drupalSettings']['gmap_static']['apiKey'] = Drupal::config('gmap_static.settings')->get('apiKey');
+    $attachments['#attached']['drupalSettings']['gmap_static']['apiKey']
+    = Drupal::config('gmap_static.settings')->get('apiKey');
   }
 }
 
@@ -75,4 +76,11 @@ function gmap_static_page_is_enabled() {
   $visibility = ($config->get('visibility')) ? $config->get('visibility') : 0;
   $page_match = !($visibility xor $page_match);
   return $page_match;
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function gmap_static_uninstall () {
+  Drupal::configFactory()->getEditable('gmap_static.settings')->delete();
 }

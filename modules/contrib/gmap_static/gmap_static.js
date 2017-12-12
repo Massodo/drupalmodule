@@ -23,7 +23,7 @@
           'class': 'gmap_static_iframe_fullscreen',
           'src': $('iframe.' + popup_class.id).attr('src'),
         }));
-        $('div.gmap_static_bigmap').once().append($('<div/>', {
+        $('div.gmap_static_bigmap').append($('<div/>', {
           'class': 'gmap_static_collapse',
           click: function () {
             $('.gmap_static_bigmap').remove();

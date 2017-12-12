@@ -69,7 +69,7 @@
         return param;
       }
 
-      attach: function add_map_image(param, height, width, map_id) {
+      function add_map_image(param, height, width, map_id) {
         var map_source = "https://maps.googleapis.com/maps/api/staticmap?";
         for (var key in param) {
           map_source += key + '=' + param[key] + "&";

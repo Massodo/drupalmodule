@@ -102,7 +102,7 @@
         $iframe_map.addClass(map_id);
         $iframe_map.wrap($('<div/>', {'class': 'gmap_static_map_block ' + map_id}));
         add_map_image(param, height, width, map_id);
-        if(view_mode != 'none'){
+        if (view_mode != 'none') {
           $iframe_map.after($('<div/>', {
             'class': 'gmap_static_extend',
             'id': map_id,

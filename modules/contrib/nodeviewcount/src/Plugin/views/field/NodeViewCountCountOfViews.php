@@ -2,8 +2,6 @@
 
 namespace Drupal\nodeviewcount\Plugin\views\field;
 
-use Drupal\Core\Form\FormStateInterface;
-use Drupal\views\Annotation\ViewsJoin;
 use Drupal\views\Plugin\views\field\FieldPluginBase;
 use Drupal\views\ResultRow;
 
@@ -19,13 +17,16 @@ class NodeViewCountCountOfViews extends FieldPluginBase {
    */
   public function query () {
     $this->ensureMyTable();
-    $this->query->addField('nodeviewcount', 'nid', 'count');
-    $this->query->addWhere(0, 'nodeviewcount.nid', 180);
   }
 
   public function render (ResultRow $values) {
+    $query = \Drupal::database()->select('nodeviewcount','count');
+    $query->addField('count','nid');
+    $query->condition('count.nid', $values->_entity->id(), '=');
+    $result = count($query->execute()->fetchAll());
+
     return [
-      '#markup' => count($values->count),
+      '#markup' => $result,
     ];
   }
 }

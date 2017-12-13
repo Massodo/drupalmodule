@@ -30,66 +30,44 @@ function nodeviewcount_views_data_alter (array &$data) {
       'title' => t('Count view'),
       'help' => t('Count view'),
       'id' => 'node_view_count_count_of_views',
+      'click sortable' => TRUE,
+    ],
+    'sort' => [
+      'id' => 'standard',
     ],
   ];
   $data['nodeviewcount']['nid'] = [
     'title' => t('Node id'),
-    'help' => t('Node id.'),
-    'relationship' => [
-      'base' => 'node_field_data',
-      'base field' => 'nid',
-      'id' => 'standard',
-      'label' => t('Node View Count Node'),
-    ],
     'field' => [
-      'id' => 'numeric',
-      'click sortable' => TRUE,
+      'title' => t('Node id'),
+      'help' => t('Node id'),
+      'id' => 'node_view_count_node_id'
     ],
-    'filter' => [
-      'id' => 'numeric',
+  ];
+  $data['nodeviewcount']['datetime'] = [
+    'title' => t('Data time'),
+    'field' => [
+      'title' => t('Data time'),
+      'help' => t('Data time'),
+      'id' => 'node_view_count_data_time',
+      'click sortable' => TRUE,
     ],
     'sort' => [
       'id' => 'standard',
     ],
-    'argument' => [
-      'id' => 'numeric',
-    ],
   ];
   $data['nodeviewcount']['uid'] = [
-    'title' => t('Who view'),
-    'help' => t('Who view  of node.'),
+    'title' => t('User id'),
+    'field' => [
+      'title' => t('User id'),
+      'help' => t('User id'),
+      'id' => 'node_view_count_user_name'
+    ],
     'relationship' => [
       'base' => 'users_field_data',
       'base field' => 'uid',
       'id' => 'standard',
-      'label' => t('Node View Count User'),
-    ],
-    'field' => [
-      'id' => 'numeric',
-      'click sortable' => TRUE,
-    ],
-    'filter' => [
-      'id' => 'numeric',
-    ],
-    'sort' => [
-      'id' => 'standard',
-    ],
-    'argument' => [
-      'id' => 'numeric',
-    ],
-  ];
-  $data['nodeviewcount']['datetime'] = [
-    'title' => t('datetime'),
-    'help' => t('When user view of node.'),
-    'field' => [
-      'id' => 'date',
-      'click sortable' => TRUE,
-    ],
-    'filter' => [
-      'id' => 'date',
-    ],
-    'sort' => [
-      'id' => 'date',
+      'label' => t('Node View Count Node'),
     ],
   ];
   return $data;

@@ -8,28 +8,24 @@ use Drupal\views\ResultRow;
 /**
  * @ingroup views_field_handlers
  *
- * @ViewsField("node_view_count_count_of_views")
+ * @ViewsField("node_view_count_data_time")
  */
-class NodeViewCountCountOfViews extends FieldPluginBase {
+class NodeViewCountDataTime extends FieldPluginBase {
 
   /**
    * {@inheritdoc}
    */
   public function query () {
     $this->ensureMyTable();
+    $this->query->addField('nodeviewcount', 'datetime', 'date');
   }
 
   /**
    * {@inheritdoc}
    */
   public function render (ResultRow $values) {
-    $query = \Drupal::database()->select('nodeviewcount','count');
-    $query->addField('count','nid');
-    $query->condition('count.nid', $values->_entity->id(), '=');
-    $result = count($query->execute()->fetchAll());
-
     return [
-      '#markup' => $result,
+      '#markup' => $values->date,
     ];
   }
 }

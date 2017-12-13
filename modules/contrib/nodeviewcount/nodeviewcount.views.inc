@@ -25,7 +25,7 @@ function nodeviewcount_views_data_alter (array &$data) {
     ],
   ];
   $data['nodeviewcount']['count_of_views'] = [
-    'title' => t('Count viewwww'),
+    'title' => t('Count view'),
     'field' => [
       'title' => t('Count view'),
       'help' => t('Count view'),

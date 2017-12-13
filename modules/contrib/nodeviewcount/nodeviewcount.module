@@ -36,7 +36,6 @@ function nodeviewcount_node_view(array &$build, NodeInterface $node, EntityViewD
  */
 function nodeviewcount_cron() {
   /** @var \Drupal\nodeviewcount\NodeViewCountRecordsManager $records_manager */
-  drupal_set_message('corn');
   $records_manager = Drupal::service('nodeviewcount.records_manager');
   $logs_life_time = $records_manager->getLogsLifeTime();
   if ($logs_life_time > 0) {

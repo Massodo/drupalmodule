@@ -44,10 +44,9 @@ function nodeviewcount_views_data_alter (array &$data) {
   ];
   $data['nodeviewcount']['datetime'] = [
     'title' => t('Data time'),
+    'help' => t('When user view of node.'),
     'field' => [
-      'title' => t('Data time'),
-      'help' => t('Data time'),
-      'id' => 'node_view_count_data_time',
+      'id' => 'date',
       'click sortable' => TRUE,
     ],
     'filter' => [

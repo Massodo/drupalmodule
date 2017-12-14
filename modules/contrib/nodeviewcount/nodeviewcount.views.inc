@@ -24,24 +24,22 @@ function nodeviewcount_views_data_alter (array &$data) {
       'field' => 'nid',
     ],
   ];
-  $data['nodeviewcount']['count_of_views'] = [
-    'title' => t('Count view'),
-    'field' => [
-      'title' => t('Count view'),
-      'help' => t('Count view'),
-      'id' => 'node_view_count_count_of_views',
-      'click sortable' => TRUE,
-    ],
-    'sort' => [
-      'id' => 'standard',
-    ],
-  ];
   $data['nodeviewcount']['nid'] = [
     'title' => t('Node id'),
     'field' => [
       'title' => t('Node id'),
       'help' => t('Node id'),
-      'id' => 'node_view_count_node_id'
+      'id' => 'node_view_count_node_id',
+      'click sortable' => TRUE,
+    ],
+    'filter' => [
+      'id' => 'numeric',
+    ],
+    'sort' => [
+      'id' => 'standard',
+    ],
+    'argument' => [
+      'id' => 'numeric',
     ],
   ];
   $data['nodeviewcount']['datetime'] = [
@@ -52,15 +50,18 @@ function nodeviewcount_views_data_alter (array &$data) {
       'id' => 'node_view_count_data_time',
       'click sortable' => TRUE,
     ],
+    'filter' => [
+      'id' => 'date',
+    ],
     'sort' => [
-      'id' => 'standard',
+      'id' => 'date',
     ],
   ];
   $data['nodeviewcount']['uid'] = [
-    'title' => t('User id'),
+    'title' => t('User name'),
     'field' => [
-      'title' => t('User id'),
-      'help' => t('User id'),
+      'title' => t('User name'),
+      'help' => t('User name'),
       'id' => 'node_view_count_user_name'
     ],
     'relationship' => [
@@ -68,6 +69,12 @@ function nodeviewcount_views_data_alter (array &$data) {
       'base field' => 'uid',
       'id' => 'standard',
       'label' => t('Node View Count Node'),
+    ],
+    'filter' => [
+      'id' => 'name',
+    ],
+    'sort' => [
+      'id' => 'standard',
     ],
   ];
   return $data;

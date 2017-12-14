@@ -99,11 +99,6 @@ class NodeViewCountSettingsForm extends ConfigFormBase {
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
     $config = $this->config('nodeviewcount.settings');
-    $a = $config->get('duplicate_views');
-    foreach ($a as $item){
-      drupal_set_message($item);
-    }
-    //drupal_set_message('test:' . $config->get('duplicate_views'));
 
     $form['node_types'] = [
       '#title' => $this->t('Node types'),
@@ -138,10 +133,10 @@ class NodeViewCountSettingsForm extends ConfigFormBase {
     ];
 
     $form['duplicate_views'] = [
-      '#title' => t('duplicate'),
-      '#description' => t('desc'),
+      '#title' => t('Duplicate data base filed.'),
+      '#description' => t('Duplicate data base files'),
       '#type' => 'checkboxes',
-      '#options' => array('Yes' => $this->t('Yes')),
+      '#options' => array('No' => $this->t('No')),
       '#default_value' => $config->get('duplicate_views'),
     ];
 

@@ -24,8 +24,11 @@ class NodeViewCountDataTime extends FieldPluginBase {
    * {@inheritdoc}
    */
   public function render (ResultRow $values) {
-    return [
-      '#markup' => $values->date,
-    ];
+    if ($values->date != '') {
+      $date = \Drupal::service('date.formatter')->format($values->date, 'short');
+      return [
+        '#markup' => $date,
+      ];
+    }
   }
 }

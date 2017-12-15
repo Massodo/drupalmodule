@@ -42,8 +42,24 @@ function nodeviewcount_views_data_alter (array &$data) {
       'id' => 'numeric',
     ],
   ];
+  $data['nodeviewcount']['id'] = [
+    'title' => t('ID'),
+    'field' => [
+      'title' => t('Id'),
+      'help' => t('View count id.'),
+      'id' => 'node_view_count_id',
+      'click sortable' => TRUE,
+    ],
+    'filter' => [
+      'id' => 'numeric',
+    ],
+    'sort' => [
+      'id' => 'standard',
+    ],
+
+  ];
   $data['nodeviewcount']['datetime'] = [
-    'title' => t('Data time'),
+    'title' => t('Timestamp '),
     'help' => t('When user view of node.'),
     'field' => [
       'id' => 'date',
@@ -59,8 +75,8 @@ function nodeviewcount_views_data_alter (array &$data) {
   $data['nodeviewcount']['name'] = [
     'title' => t('User name'),
     'field' => [
-      'title' => t('User name'),
-      'help' => t('User name'),
+      'title' => t('Who view(username)'),
+      'help' => t('Who view  of node.'),
       'id' => 'node_view_count_user_name'
     ],
     'relationship' => [
@@ -77,7 +93,7 @@ function nodeviewcount_views_data_alter (array &$data) {
     ],
   ];
   $data['nodeviewcount']['uid'] = [
-    'title' => t('Who view'),
+    'title' => t('Who view(id)'),
     'help' => t('Who view  of node.'),
     'relationship' => [
       'base' => 'users_field_data',

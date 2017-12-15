@@ -72,26 +72,6 @@ function nodeviewcount_views_data_alter (array &$data) {
       'id' => 'date',
     ],
   ];
-  $data['nodeviewcount']['name'] = [
-    'title' => t('User name'),
-    'field' => [
-      'title' => t('Who view(username)'),
-      'help' => t('Who view  of node.'),
-      'id' => 'node_view_count_user_name'
-    ],
-    'relationship' => [
-      'base' => 'users_field_data',
-      'base field' => 'uid',
-      'id' => 'standard',
-      'label' => t('Node View Count Node'),
-    ],
-    'filter' => [
-      'id' => 'name',
-    ],
-    'sort' => [
-      'id' => 'standard',
-    ],
-  ];
   $data['nodeviewcount']['uid'] = [
     'title' => t('Who view(id)'),
     'help' => t('Who view  of node.'),

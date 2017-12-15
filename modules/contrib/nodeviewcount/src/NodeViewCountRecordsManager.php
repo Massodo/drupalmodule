@@ -50,11 +50,10 @@ class NodeViewCountRecordsManager implements NodeViewCountRecordsManagerInterfac
     $timeZone = date_default_timezone_get();
     $dateTime = new DrupalDateTime('NOW', $timeZone);
     $stringDate = $dateTime->format(DEFAULT_TIME_FORMAT);
-    $stringDate = substr($stringDate, 0,19);
     $fields = array(
-    'nid' => $nid,
-    'uid' => $uid,
-    'datetime' => strtotime($stringDate),
+      'nid' => $nid,
+      'uid' => $uid,
+      'datetime' => strtotime($stringDate),
     );
     $this->connection->insert('nodeviewcount')
     ->fields($fields)

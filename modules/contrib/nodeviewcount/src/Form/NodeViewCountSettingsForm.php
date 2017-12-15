@@ -251,7 +251,6 @@ class NodeViewCountSettingsForm extends ConfigFormBase {
       ->set('user_roles', array_keys($counting_user_roles))
       ->set('excluded_user_roles', array_keys($excluded_user_roles))
       ->set('logs_life_time', (int) $form_state->getValue('logs_life_time'))
-      ->set('duplicate_views', $form_state->getValue('duplicate_views'))
       ->save(TRUE);
     $this->cacheTagsInvalidator->invalidateTags(['node_view']);
     parent::submitForm($form, $form_state);

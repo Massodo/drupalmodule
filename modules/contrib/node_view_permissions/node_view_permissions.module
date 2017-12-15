@@ -10,15 +10,18 @@ use Drupal\node\Entity\NodeType;
 use Drupal\node\NodeInterface;
 
 /**
- *  Implements hook_node_access_records().
+ * Implements hook_node_access_records().
  */
-function node_view_permissions_node_access_records(NodeInterface $node) {
-  drupal_set_message('hook_node_access_records');
+function node_view_permissions_node_access_records (NodeInterface $node) {
+  drupal_set_message('hook_node_access_records()');
+  /*
   $grants = [];
   // We only care about the node if it's published.
   // We don't want to override view published permissions.
   if ($node->isPublished()) {
     $grants[] = [
+      'nid' => $node->id(),
+      'langcode' => '',
       'realm' => "view_any_{$node->getType()}_content",
       'gid' => 1,
       'grant_view' => 0,
@@ -27,6 +30,8 @@ function node_view_permissions_node_access_records(NodeInterface $node) {
       'priority' => 0,
     ];
     $grants[] = [
+      'nid' => $node->id(),
+      'langcode' => '',
       'realm' => "view_own_{$node->getType()}_content",
       'gid' => $node->getOwnerId(),
       'grant_view' => 1,
@@ -36,6 +41,7 @@ function node_view_permissions_node_access_records(NodeInterface $node) {
     ];
   }
   return $grants;
+  */
 }
 
 /**
@@ -58,8 +64,10 @@ function node_view_permissions_node_grants(AccountInterface $account, $op) {
     }
   }
   if($grants != NULL){
-    drupal_set_message('not null');
     var_dump($grants);
+    $insert = Drupal::database()->insert('node_access');
+    $insert->fields($grants);
+    //$insert->execute();
   }
   return $grants;
 }

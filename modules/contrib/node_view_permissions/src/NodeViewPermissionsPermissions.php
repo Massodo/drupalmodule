@@ -22,7 +22,6 @@ class NodeViewPermissionsPermissions {
    * Added the permissions.
    */
   public function permissions() {
-    drupal_set_message('1243');
     $permissions = [];
     $nodeTypes = NodeType::loadMultiple();
     foreach ($nodeTypes as $nodeType) {

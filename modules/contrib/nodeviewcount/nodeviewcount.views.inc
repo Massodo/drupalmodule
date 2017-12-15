@@ -77,17 +77,26 @@ function nodeviewcount_views_data_alter (array &$data) {
     ],
   ];
   $data['nodeviewcount']['uid'] = [
-    'title' => t('User id'),
-    'help' => t('Show user id'),
+    'title' => t('Who view'),
+    'help' => t('Who view  of node.'),
+    'relationship' => [
+      'base' => 'users_field_data',
+      'base field' => 'uid',
+      'id' => 'standard',
+      'label' => t('Node View Count User'),
+    ],
     'field' => [
-      'id' => 'uid',
+      'id' => 'numeric',
       'click sortable' => TRUE,
     ],
     'filter' => [
-      'id' => 'uid',
+      'id' => 'numeric',
     ],
     'sort' => [
-      'id' => 'uid',
+      'id' => 'standard',
+    ],
+    'argument' => [
+      'id' => 'numeric',
     ],
   ];
   return $data;

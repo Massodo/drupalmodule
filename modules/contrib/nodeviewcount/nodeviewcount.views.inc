@@ -56,7 +56,7 @@ function nodeviewcount_views_data_alter (array &$data) {
       'id' => 'date',
     ],
   ];
-  $data['nodeviewcount']['uid'] = [
+  $data['nodeviewcount']['name'] = [
     'title' => t('User name'),
     'field' => [
       'title' => t('User name'),
@@ -74,6 +74,20 @@ function nodeviewcount_views_data_alter (array &$data) {
     ],
     'sort' => [
       'id' => 'standard',
+    ],
+  ];
+  $data['nodeviewcount']['uid'] = [
+    'title' => t('User id'),
+    'help' => t('Show user id'),
+    'field' => [
+      'id' => 'uid',
+      'click sortable' => TRUE,
+    ],
+    'filter' => [
+      'id' => 'uid',
+    ],
+    'sort' => [
+      'id' => 'uid',
     ],
   ];
   return $data;

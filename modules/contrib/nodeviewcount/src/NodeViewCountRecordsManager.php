@@ -47,45 +47,14 @@ class NodeViewCountRecordsManager implements NodeViewCountRecordsManagerInterfac
    * {@inheritdoc}
    */
   public function insertRecord($uid, $nid) {
-    $config = \Drupal::config('nodeviewcount.settings');
-
-    foreach ($config->get('duplicate_views') as $item){
-      $duplicate = $item;
-    }
-
-    if($duplicate == '0'){
-      $this->insertData($uid, $nid);
-    } else {
-      drupal_set_message('test ');
-      $query = \Drupal::database()->select('nodeviewcount', 'nvc');
-      $query->addField('nvc','id');
-      $query->condition('uid', $uid, '=');
-      $query->condition('nid', $nid, '=');
-      $result = $query->execute()->fetchField();
-
-      if($result == NULL){
-        $this->insertData($uid, $nid);
-      } else {
-        $dateTime = new DrupalDateTime('NOW', date_default_timezone_get());
-        $query = \Drupal::database()->update('nodeviewcount');
-        $query->fields([
-          'datetime' => strtotime($dateTime),
-        ]);
-        $query->condition('id', $result, '=');
-        $query->execute();
-      }
-    }
-  }
-
-  private function insertData($uid, $nid){
     $timeZone = date_default_timezone_get();
     $dateTime = new DrupalDateTime('NOW', $timeZone);
     $stringDate = $dateTime->format(DEFAULT_TIME_FORMAT);
     $stringDate = substr($stringDate, 0,19);
     $fields = array(
-      'nid' => $nid,
-      'uid' => $uid,
-      'datetime' => strtotime($stringDate),
+    'nid' => $nid,
+    'uid' => $uid,
+    'datetime' => strtotime($stringDate),
     );
     $this->connection->insert('nodeviewcount')
     ->fields($fields)
@@ -96,7 +65,6 @@ class NodeViewCountRecordsManager implements NodeViewCountRecordsManagerInterfac
    * {@inheritdoc}
    */
   public function getNodeViewsCount(NodeInterface $node, UserInterface $user = NULL, $distinct_users = FALSE) {
-    drupal_set_message('get node view count');
     if (!$this->isRecordableForNodeType($node)) {
       return FALSE;
     }

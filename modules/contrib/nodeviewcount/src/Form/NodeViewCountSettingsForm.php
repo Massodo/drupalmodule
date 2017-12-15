@@ -132,14 +132,6 @@ class NodeViewCountSettingsForm extends ConfigFormBase {
       '#default_value' => $config->get('excluded_user_roles'),
     ];
 
-    $form['duplicate_views'] = [
-      '#title' => t('Duplicate data base filed.'),
-      '#description' => t('Duplicate data base files'),
-      '#type' => 'checkboxes',
-      '#options' => array('No' => $this->t('No')),
-      '#default_value' => $config->get('duplicate_views'),
-    ];
-
     $form['logs_life_time'] = [
       '#type' => 'select',
       '#title' => t('Discard node views logs older than'),

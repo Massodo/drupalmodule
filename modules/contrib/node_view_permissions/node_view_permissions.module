@@ -78,5 +78,5 @@ function node_view_permissions_node_access (NodeInterface $node, $op, AccountInt
     }
   }
 
-  return NODE_ACCESS_IGNORE;
+  //return NODE_ACCESS_IGNORE;
 }
